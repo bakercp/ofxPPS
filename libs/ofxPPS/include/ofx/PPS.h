@@ -35,6 +35,8 @@ namespace ofx {
 class PPS
 {
 public:
+    static int findSource(char* path, pps_handle_t* handle, int* avail_mode);
+    static int fetchSource(int i, pps_handle_t *handle, int *avail_mode);
 
 };
 
