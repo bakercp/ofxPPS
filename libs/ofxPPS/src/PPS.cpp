@@ -86,7 +86,7 @@ int PPS::findSource(char* path, pps_handle_t* handle, int* avail_mode)
     return 0;
 }
 
-int PPS::fetch_source(int i, pps_handle_t* handle, int* avail_mode)
+int PPS::fetchSource(int i, pps_handle_t* handle, int* avail_mode)
 {
     struct timespec timeout;
     pps_info_t infobuf;
