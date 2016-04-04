@@ -36,7 +36,7 @@ void ofApp::setup()
 
     int argc = 2;
 
-    const char * argv[] = {
+    char * argv[] = {
         "cmd",
         "/dev/pps0",
     };
