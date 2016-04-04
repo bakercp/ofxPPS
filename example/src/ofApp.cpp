@@ -38,13 +38,13 @@ void ofApp::setup()
     char* argv[] = {{"cmd"}, {"/dev/pps0"} };
 
     /* Check the command line */
-    if (argc < 2)
-        usage(argv[0]);
+//    if (argc < 2)
+//        usage(argv[0]);
 
     for (i = 1; i < argc && i <= 4; i++) {
-        ret = find_source(argv[i], &handle[i - 1], &avail_mode[i - 1]);
+        ret = PPS::findSource(argv[i], &handle[i - 1], &avail_mode[i - 1]);
         if (ret < 0)
-            exit(EXIT_FAILURE);
+            return;//exit(EXIT_FAILURE);
     }
 
     num = i - 1;
@@ -53,16 +53,16 @@ void ofApp::setup()
     /* loop, printing the most recent timestamp every second or so */
     while (1) {
         for (i = 0; i < num; i++) {
-            ret = fetch_source(i, &handle[i], &avail_mode[i]);
+            ret = fetchSource(i, &handle[i], &avail_mode[i]);
             if (ret < 0 && errno != ETIMEDOUT)
-                exit(EXIT_FAILURE);
+                return; //exit(EXIT_FAILURE);
         }
     }
 
     for (; i >= 0; i--)
         time_pps_destroy(handle[i]);
     
-    return 0;
+    return;
 
 }
 
