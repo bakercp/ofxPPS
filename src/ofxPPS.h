@@ -26,7 +26,4 @@
 #pragma once
 
 
-#include "timepps.h"
-
-
-namespace ofxPPS = ofx::PPS;
+#include "ofx/PPS.h"
