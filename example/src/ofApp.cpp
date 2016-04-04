@@ -41,10 +41,6 @@ void ofApp::setup()
         "/dev/pps0",
     };
 
-    /* Check the command line */
-//    if (argc < 2)
-//        usage(argv[0]);
-
     for (i = 1; i < argc && i <= 4; i++) {
         ret = ofx::PPS::findSource(argv[i], &handle[i - 1], &avail_mode[i - 1]);
         if (ret < 0)

@@ -24,7 +24,7 @@
 
 
 #include "ofx/PPS.h"
-
+#include "ofxCppGPIO.h"
 
 namespace ofx {
 
@@ -88,6 +88,8 @@ int PPS::findSource(char* path, pps_handle_t* handle, int* avail_mode)
 
 int PPS::fetchSource(int i, pps_handle_t* handle, int* avail_mode)
 {
+    GPIO::DigitalOut out(18);
+
     struct timespec timeout;
     pps_info_t infobuf;
     int ret;
@@ -114,6 +116,11 @@ retry:
         fprintf(stderr, "time_pps_fetch() error %d (%m)\n", ret);
         return -1;
     }
+
+    std::this_thread::sleep_for(sleep);
+    out.on();
+    out.off();
+
 
     printf("source %d - "
            "assert %ld.%09ld, sequence: %ld - "

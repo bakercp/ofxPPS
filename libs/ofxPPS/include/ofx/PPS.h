@@ -38,11 +38,38 @@
 namespace ofx {
 
 
+class PPSEventArgs
+{
+public:
+    
+
+    cosnt std::string& device() const
+    {
+        return _device;
+    }
+
+private:
+    /// \brief Represents a PPS source.
+    pps_handle_t _handle;
+
+};
+
+
+class PPSEvents
+{
+public:
+    ofEvent<const pps_info_t> onPPS;
+    ofEvent<const pps_info_t> onPPSError;
+
+};
+
 class PPS
 {
 public:
-    static int findSource(char* path, pps_handle_t* handle, int* avail_mode);
-    static int fetchSource(int i, pps_handle_t *handle, int *avail_mode);
+    int findSource(char* path, pps_handle_t* handle, int* avail_mode);
+    int fetchSource(int i, pps_handle_t *handle, int *avail_mode);
+
+    PPSEvents events;
 
 };
 
