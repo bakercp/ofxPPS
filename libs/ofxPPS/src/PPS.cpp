@@ -117,8 +117,8 @@ retry:
         return -1;
     }
 
-    std::this_thread::sleep_for(sleep);
     out.on();
+    std::this_thread::sleep_for(std::chrono::nanoseconds(100));
     out.off();
 
 
