@@ -35,14 +35,18 @@ void ofApp::setup()
     int ret;
 
     int argc = 2;
-    char* argv[] = {{"cmd"}, {"/dev/pps0"} };
+
+    const char * argv[] = {
+        "cmd",
+        "/dev/pps0",
+    };
 
     /* Check the command line */
 //    if (argc < 2)
 //        usage(argv[0]);
 
     for (i = 1; i < argc && i <= 4; i++) {
-        ret = PPS::findSource(argv[i], &handle[i - 1], &avail_mode[i - 1]);
+        ret = ofx::PPS::findSource(argv[i], &handle[i - 1], &avail_mode[i - 1]);
         if (ret < 0)
             return;//exit(EXIT_FAILURE);
     }
@@ -53,7 +57,7 @@ void ofApp::setup()
     /* loop, printing the most recent timestamp every second or so */
     while (1) {
         for (i = 0; i < num; i++) {
-            ret = fetchSource(i, &handle[i], &avail_mode[i]);
+            ret = ofx::PPS::fetchSource(i, &handle[i], &avail_mode[i]);
             if (ret < 0 && errno != ETIMEDOUT)
                 return; //exit(EXIT_FAILURE);
         }
