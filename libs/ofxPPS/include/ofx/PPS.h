@@ -26,6 +26,7 @@
 #pragma once
 
 
+#include "ofEvent.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -43,7 +44,7 @@ class PPSEventArgs
 public:
     
 
-    cosnt std::string& device() const
+    const std::string& device() const
     {
         return _device;
     }
