@@ -28,6 +28,42 @@
 
 void ofApp::setup()
 {
+    int num;
+    pps_handle_t handle[4];
+    int avail_mode[4];
+    int i = 0;
+    int ret;
+
+    int argc = 2;
+    char* argv[] = {{"cmd"}, {"/dev/pps0"} };
+
+    /* Check the command line */
+    if (argc < 2)
+        usage(argv[0]);
+
+    for (i = 1; i < argc && i <= 4; i++) {
+        ret = find_source(argv[i], &handle[i - 1], &avail_mode[i - 1]);
+        if (ret < 0)
+            exit(EXIT_FAILURE);
+    }
+
+    num = i - 1;
+    printf("ok, found %d source(s), now start fetching data...\n", num);
+
+    /* loop, printing the most recent timestamp every second or so */
+    while (1) {
+        for (i = 0; i < num; i++) {
+            ret = fetch_source(i, &handle[i], &avail_mode[i]);
+            if (ret < 0 && errno != ETIMEDOUT)
+                exit(EXIT_FAILURE);
+        }
+    }
+
+    for (; i >= 0; i--)
+        time_pps_destroy(handle[i]);
+    
+    return 0;
+
 }
 
 
