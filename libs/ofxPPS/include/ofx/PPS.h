@@ -44,14 +44,14 @@ class PPSEventArgs
 public:
     
 
-    const std::string& device() const
+    pps_handle_t source() const
     {
-        return _device;
+        return _source;
     }
 
 private:
     /// \brief Represents a PPS source.
-    pps_handle_t _handle;
+    pps_handle_t _source;
 
 };
 
